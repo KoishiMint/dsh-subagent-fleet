@@ -1,0 +1,54 @@
+{
+  "name": "dsh-subagent-fleet",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Model queue, automatic failover, and live telemetry for subagent delegation in DeepSeek Harness",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "subagent",
+    "llm",
+    "failover"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR-NAME/dsh-subagent-fleet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR-NAME/dsh-subagent-fleet/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "rotation.js",
+    "api.js",
+    "usage.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node rotation.test.mjs && node selftest.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    }
+  }
+}

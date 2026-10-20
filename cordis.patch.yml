@@ -1,0 +1,54 @@
+# dsh-subagent-fleet bundle patch.
+#
+# One Host row plus its browser half (declared by `dsh.client` in package.json,
+# which binds to this row because the name is the bare package name).
+#
+# The Host half keeps the Subagent model allowlist equal to the routes this Host
+# can actually serve, by writing the live LLM catalog into the
+# `subagent-model-selection-settings` row that the shipped delegation tool reads
+# when it composes a new Session. That is what makes every registered route —
+# including the third-party channel models mounted by dsh-our-free-model —
+# selectable for a subagent, instead of only the subset picked by hand on the
+# Subagent settings page.
+- insert:
+    - id: subagent-live-routes
+      name: 'dsh-subagent-fleet'
+      config:
+        # Master switch for this reconciler.
+        enabled: true
+        # The selection in the Subagent settings page is the authority: this
+        # plugin only prunes routes no provider advertises any more, and never
+        # adds one back. Set true to make the plugin mirror the whole live
+        # catalog instead (destructive to a curated selection).
+        expand: false
+        # Read models only from these providers; empty means every provider.
+        includeProviders: []
+        # Never read models from these providers.
+        excludeProviders: []
+        # Upper bound on the allowlist, so one chatty catalog cannot bloat the
+        # profile patch without limit.
+        maxRoutes: 400
+        # Budget for one provider's model listing; a slow or offline channel is
+        # skipped instead of stalling the pass.
+        providerTimeoutMs: 8000
+        # Collapse bursts of adapter registrations into one pass.
+        debounceMs: 1200
+        # Floor between two catalog passes, so a channel that keeps announcing
+        # topology cannot make this plugin rewrite the profile patch in a loop.
+        minPassIntervalMs: 15000
+        # Boot retries while the Loader is still settling the settings row.
+        retryDelaysMs: [0, 2000, 6000]
+        # Keep a human's explicit "off" on the settings page authoritative.
+        respectSettingsEnabled: true
+        # Which selected model a subagent uses when the caller does not name one.
+        #   first   -> the first selected model (recommended)
+        #   last    -> the last selected model
+        #   inherit -> upstream behaviour: children follow the parent's route
+        defaultRoute: first
+        # Delegation provider whose child defaults are adjusted. The shipped
+        # standard preset registers it as `spawn`.
+        defaultRouteProvider: spawn
+        # Optional JSON status file, rewritten after every pass so the pass is
+        # inspectable without an attached terminal. Empty disables it; set an
+        # absolute path of your own to turn it on.
+        reportPath: ''

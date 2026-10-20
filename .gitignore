@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local status report written by the reconciler when reportPath is set.
+.subagent-live-routes.json
+*.status.json
