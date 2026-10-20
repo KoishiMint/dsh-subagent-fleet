@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Subagent Live Routes",
-    "description": "Lets subagents use every model route the Host can actually serve, including third-party channel models, instead of a stale hand-picked allowlist."
+    "title": "Subagent Fleet",
+    "description": "Ordered model queue, automatic failover when a model runs out of quota, and per-subagent model and token telemetry."
   }
 }

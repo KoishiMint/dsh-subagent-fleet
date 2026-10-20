@@ -19,7 +19,15 @@
  * @module dsh-subagent-fleet/rotation
  */
 
-/** Failure codes worth moving to another model for. */
+/**
+ * Failure codes worth moving to another model for.
+ *
+ * `TIMEOUT` belongs here: a route that cannot answer inside the request budget
+ * is unusable *right now*, and the next route may well answer. It is grouped
+ * with the other "this route is exhausted" codes rather than with genuine
+ * request errors such as `INVALID_REQUEST`, which every route would reject
+ * identically.
+ */
 const ROTATABLE_CODES = new Set([
   'QUOTA_EXCEEDED',
   'RATE_LIMIT',
@@ -28,6 +36,7 @@ const ROTATABLE_CODES = new Set([
   'AUTH',
   'PERMISSION_DENIED',
   'QUEUE',
+  'TIMEOUT',
 ])
 
 /**

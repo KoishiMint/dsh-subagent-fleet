@@ -15,11 +15,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR-NAME/dsh-subagent-fleet.git"
+    "url": "git+https://github.com/KoishiMint/dsh-subagent-fleet.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR-NAME/dsh-subagent-fleet/issues"
+    "url": "https://github.com/KoishiMint/dsh-subagent-fleet/issues"
   },
+  "homepage": "https://github.com/KoishiMint/dsh-subagent-fleet#readme",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",

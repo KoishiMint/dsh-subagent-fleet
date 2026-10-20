@@ -51,23 +51,23 @@ concurrent subagents never consume each other's place.
 A compact pill beside the model selector:
 
 ```
-⧉ 2/21  deepseek-v4.1-flash · buddy   ↑13.09M ↓2.09M
+⧉ 2/5  example-model · provider-b   ↑1.20M ↓180K
 ```
 
 Expand it for one row per child, running ones first and tinted deep blue:
 
 ```
-● 模拟器素材上公平跑分  运行中   deepseek-v4.1-flash · buddy
-  515K (↑421K ↓94K)   226 tok/s   命中 97%   缓存 13.57M
+● refactor-parser  运行中   example-model · provider-b
+  240K (↑200K ↓40K)   120 tok/s   命中 85%   缓存 1.10M
 ```
 
-- **`515K (↑421K ↓94K)`** — total tokens, with the input/output split. Total
-  excludes cache reads: those dominate the raw count (often 97%+) and including
+- **`240K (↑200K ↓40K)`** — total tokens, with the input/output split. Total
+  excludes cache reads: those dominate the raw count (often 90%+) and including
   them would hide the real spend.
-- **`226 tok/s`** — decode speed, not wall-clock. Wall-clock folds in queueing
+- **`120 tok/s`** — decode speed, not wall-clock. Wall-clock folds in queueing
   and tool time and makes models incomparable.
-- **`命中 97%`** — share of input served from the prompt cache.
-- **`缓存 13.57M`** — raw cached volume, reference only.
+- **`命中 85%`** — share of input served from the prompt cache.
+- **`缓存 1.10M`** — raw cached volume, reference only.
 
 Finished children keep their numbers: the strip reads the host's projection
 checkpoint from disk, so a child that has left memory still reports what it cost.

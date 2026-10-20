@@ -49,13 +49,15 @@ check('empty current', empty.current('x'), undefined)
 check('empty advance', empty.advance('x'), undefined)
 
 // Failure classification.
-for (const code of ['QUOTA_EXCEEDED', 'RATE_LIMIT', 'MISSING_CREDENTIAL', 'AUTH', 'QUEUE']) {
+for (const code of ['QUOTA_EXCEEDED', 'RATE_LIMIT', 'MISSING_CREDENTIAL', 'AUTH', 'QUEUE', 'TIMEOUT']) {
   check(`rotatable ${code}`, isRotatableFailure({ code }), true)
 }
 for (const status of [401, 402, 403, 429]) {
   check(`rotatable status ${status}`, isRotatableFailure({ code: 'SERVER', status }), true)
 }
-for (const code of ['SERVER', 'TIMEOUT', 'INVALID_REQUEST', 'UNSUPPORTED_CONTENT', 'EMPTY_RESPONSE']) {
+// These describe the request or the model itself, so another route would fail
+// the same way; rotating would only burn the queue.
+for (const code of ['SERVER', 'INVALID_REQUEST', 'UNSUPPORTED_CONTENT', 'EMPTY_RESPONSE']) {
   check(`not rotatable ${code}`, isRotatableFailure({ code }), false)
 }
 check('null failure', isRotatableFailure(null), false)
