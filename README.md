@@ -2,6 +2,8 @@
 
 > Model queue, automatic failover, and live telemetry for **subagent delegation** in [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
+**English** · [简体中文](README.zh.md)
+
 Subagents in DSH are powerful but opaque: you cannot see which model a child is
 running on, how much it has spent, or what happens when its quota runs out. This
 plugin fixes all three.
